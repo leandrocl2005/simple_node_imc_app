@@ -1,0 +1,8 @@
+.custom-index-container .custom-card {
+    margin-top: 16px;
+}
+
+.custom-index-container .custom-card .custom-span {
+   color: #777;
+   font-size: 20px;
+}
