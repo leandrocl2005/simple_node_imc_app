@@ -14,31 +14,35 @@
   <body>
 
     <div class="container custom-index-container">
-      <h1>Calcule seu IMC {{name}}</h1>
+      <h1>Calcule seu IMC
+        {{name}}</h1>
       <form action="/" method="POST">
 
         <div class="form-row">
 
           <div class="form-group col-md-6">
             <label for="height">Altura</label>
-            <input
-              type="text"
-              class="form-control"
-              id="height"
-              name="height"
-              value="{{height}}"
-            >
+            <input type="text" class="form-control" id="height" name="height" value="{{height}}">
           </div>
 
           <div class="form-group col-md-6">
             <label for="weight">Peso</label>
-            <input
-              type="text"
-              class="form-control"
-              id="weight"
-              name="weight"
-              value="{{weight}}"
-            >
+            <input type="text" class="form-control" id="weight" name="weight" value="{{weight}}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sexo" id="sexo" value="1" checked="checked">
+              <label class="form-check-label" for="masculino">
+                Masculino
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sexo" id="sexo" value="0">
+              <label class="form-check-label" for="feminino">
+                Feminino
+              </label>
+            </div>
           </div>
 
         </div>
@@ -49,16 +53,23 @@
 
       <div class="card custom-card">
         <div class="card-body">
-          <h4 class="card-title">
-            Resultado:
-            <span class="custom-span">
-              {% if imc %} {{imc}} {% endif %}
-            </span>
-          </h4>
+          <h4 class="card-title">Estatísticas:</h4>
+          <ul class="list-group">
+            <li class="list-group-item">
+              Número de mulheres: 
+              <span class="list-result">{{total_women}}</span>
+            </li>
+            <li class="list-group-item">
+              Número de homens: 
+              <span class="list-result">{{total_men}}</span>
+            </li>
+            <li class="list-group-item">
+              Número de pessoas fora do ideal: 
+              <span class="list-result">{{total_out_imc}}</span>
+            </li>
+          </ul>          
         </div>
-      <div>
+        <div></div>
 
-    </div>
-
-  </body>
-</html>
+      </body>
+    </html>

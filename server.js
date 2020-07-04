@@ -26,6 +26,7 @@
 
 const express = require('express')
 const nunjucks = require('nunjucks')
+const db = require("./db.js")
 
 const server = express()
 
@@ -40,33 +41,64 @@ nunjucks.configure("views", {
 })
 
 server.get("/", function(req, res) {
-    return res.render("index.njk")
+
+    db.all(`
+        SELECT * FROM imc
+    `, function(err, rows) {
+
+        if (err) {
+            return console.log(err)
+        }
+
+        const total_women = rows.filter(
+            (person) => person.sexo==0
+        ).length
+
+        const total_men = rows.filter(
+            (person) => person.sexo==1
+        ).length
+
+        res.render("index.njk", {
+            total_men,
+            total_women
+        })
+    })
+
+
 })
 
 server.post("/", function(req, res) {
-    
+
+    const query = `
+        INSERT INTO imc (
+            altura,
+            peso,
+            sexo
+        ) VALUES (?,?,?);
+    `
+
     // get form data
-    let {weight, height} = req.body
+    let {weight, height, sexo} = req.body
     
     // format form data
     weight = Number(weight.replace(',','.'))
     height = Number(height.replace(',','.'))
-    
-    // valid form data
-    if (!weight || !height) {
-        return res.redirect("/")
+    sexo = Number(sexo)
+
+    const values = [
+        height,
+        weight,
+        sexo
+    ]
+
+    function afterInsert(err) { // don't use arrow funcs
+    if (err) {
+        return res.send("Erro no cadastro!")
     }
+        return res.redirect("/")
+    }   
 
-    // compute imc
-    let imc = weight / (height * height)
-    imc = Math.round(imc * 100) / 100
-    imc = imc.toString().replace(".", ",")
-
-    // send results to index
-    return res.render("index.njk", {
-        ...req.body,
-        imc
-    })
+    db.run(query, values, afterInsert)    
 })
 
 server.listen(5000, function(){
