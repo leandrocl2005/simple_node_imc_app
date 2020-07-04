@@ -5,7 +5,7 @@
 /* with npm start you run server.js */
 /* package.json ---->
 {
-  "name": "aula003Conteudo",
+  "name": "imc",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
