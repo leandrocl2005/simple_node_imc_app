@@ -57,7 +57,7 @@
           <ul class="list-group">
             <li class="list-group-item">
               Número de mulheres: 
-              <span class="list-result">{{total_women}}</span>
+              <span class="list-result {% if women_number_greater_than_4 %}red{% endif %}">{{total_women}}</span>
             </li>
             <li class="list-group-item">
               Número de homens: 
