@@ -1,0 +1,36 @@
+.github-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.github-user-container {
+    margin: 32px;
+    box-shadow: 1px 4px 4px -1px rgba(0, 0, 0, 0.8);
+    transform: scale(0.2) translateY(50vh);
+    opacity: 0;
+    transition: all 2s;
+    animation: 2s ease 200ms animacaoTitulo forwards;
+}
+
+@keyframes animacaoTitulo {
+    100% {
+        transform: scale(0.9) translateY(0);
+        opacity: 1;        
+    }
+}
+
+.table-imc {
+    padding: 16px;
+    box-shadow: 1px 4px 4px -1px rgba(0, 0, 0, 0.8); 
+}
+
+.chart-container {
+    margin: 64px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}

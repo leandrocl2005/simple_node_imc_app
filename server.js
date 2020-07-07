@@ -26,6 +26,8 @@
 
 const express = require('express')
 const nunjucks = require('nunjucks')
+const axios = require('axios')
+
 const db = require("./db.js")
 
 const server = express()
@@ -61,11 +63,12 @@ server.get("/", function(req, res) {
             total_women
         })
     })
-
-
 })
 
 server.post("/", function(req, res) {
+
+    console.log(req.body)
+
 
     // get form data
     let {weight, height, sexo} = req.body
@@ -109,6 +112,38 @@ server.get("/table/:page", function(req, res) {
     `, function(err, rows) {
         res.render("table.njk", {rows})
     })
+})
+
+server.get("/github", async function(req, res) {
+    
+    const user = await axios.get('https://api.github.com/users/' + "leandrocl2005")
+    .then(function(response){
+      return response.data
+    });
+    
+    db.all(`
+        select * from imc limit 6
+    `, function(err, rows) {
+        return res.render("github.njk", {user, rows})
+    })
+    
+})
+
+server.get("/api/hg", function(req, res) {
+    return res.send({
+        lim_inf: [10, 20, 25, 30, 35, 40, 45],
+        lim_sup: [20, 30, 35, 40, 41, 45, 55],
+        cum_count: [5, 10, 15, 20, 30, 40, 50]
+    })
+})
+
+server.get("/hg", function(req, res) {
+    db.all(`
+        select * from imc limit 6
+    `, function(err, rows) {
+        return res.render("highchart.njk", {rows})
+    })
+    
 })
 
 server.listen(5000, function(){
